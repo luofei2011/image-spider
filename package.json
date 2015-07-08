@@ -1,0 +1,20 @@
+{
+  "name": "image-spider",
+  "version": "1.0.0",
+  "description": "web spider for image",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^2.1.4",
+    "node.extend": "^1.1.5",
+    "jsdom": "^3.1.2",
+    "mkdirp": "^0.5.1",
+    "node-jquery": "^0.1.0",
+    "request": "^2.58.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "luofei",
+  "license": "ISC"
+}
