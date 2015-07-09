@@ -1,12 +1,13 @@
-var Helper = require('./lib/helper');
+var Util = require('./lib/util');
 var Defer = require('./lib/defer');
 var Url = require('./lib/url');
 var Cache = require('./lib/cache');
+var Log = require('./lib/log');
 
 var chromeUA = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36';
 
 var reHref = /href\s*=\s*((?:"[^"]*")|(?:'[^']*')|[^>\s]+)/g
-var reImg = /<img((?:\s*[\w:\.-]+(?:\s*(?:(?:=))\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/;
+var reImg = /<img((?:\s*[\w:\.-]+(?:\s*(?:(?:=))\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/g;
 
 var MAX_LEVEL = 4;
 
@@ -46,7 +47,7 @@ Spider.prototype.start = function (urlObj) {
     level++;
 
     console.log('[Get url]', url, '[in level]', level);
-    Helper.get(url, function (data) {
+    Util.get(url, function (data) {
         self.defer.resetIndex();
 
         //console.log('[start end]', urlObj);
@@ -73,6 +74,19 @@ Spider.prototype._setLevel = function (urls, level) {
     });
 };
 
+Spider.prototype._getImgUrls = function (imgs, pUrl) {
+    var imgUrls = [];
+    var reSrc = /src=['"]([^'"]+)['"]/;
+
+    imgs && imgs.forEach(function (img) {
+        var match = img.match(reSrc);
+
+        match && imgUrls.push(Url.join(pUrl, match[1]));
+    });
+
+    return imgUrls;
+};
+
 Spider.prototype._getHref = function (data, pUrl) {
     var hrefs = data.match(reHref);
     var self = this;
@@ -83,11 +97,17 @@ Spider.prototype._getHref = function (data, pUrl) {
         return Url.join(pUrl, href);
     });
 
+    var imgs = data.match(reImg) || [];
+    imgs = this._getImgUrls(imgs, pUrl);
+    //console.log(imgs);
+    Log.append(imgs, 'images_log');
+
     // 如果设置了抓取同域，则没必要再执行该项
     // hrefs = Url.getMoreSimilaryUrls(hrefs);
     if (self.onlyHost) {
         hrefs = hrefs && hrefs.filter(function (href) {
-            return href.indexOf(pUrl) !== -1 && href.indexOf('.xml') === -1 && href.indexOf('.css') === -1 && href.indexOf('.js') === -1;
+            //return href.indexOf(pUrl) !== -1 && href.indexOf('.xml') === -1 && href.indexOf('.css') === -1 && href.indexOf('.js') === -1;
+            return href.indexOf(pUrl) !== -1 && Util.canStoreType.indexOf(Util.getFileType(href)) === -1 && !Util.isIgnoreUrl(href);
         });
     }
     else {
