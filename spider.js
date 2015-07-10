@@ -9,8 +9,6 @@ var chromeUA = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, l
 var reHref = /href\s*=\s*((?:"[^"]*")|(?:'[^']*')|[^>\s]+)/g
 var reImg = /<img((?:\s*[\w:\.-]+(?:\s*(?:(?:=))\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/g;
 
-var MAX_LEVEL = 4;
-
 function Spider(url, options) {
     options = options || {};
     this.url = url;

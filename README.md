@@ -16,7 +16,11 @@
 
 #### OPTIONS
 
-TODO.
+`useAgent`: the ua of spider.
+
+`maxSockets`: the concurrent number of spider.
+
+`onlyHost`: whether the spider only crawl the same domain website, default `true`.
 
 #### OUTPUT 
 
