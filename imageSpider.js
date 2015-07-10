@@ -34,7 +34,17 @@ ImageSpider.prototype.start = function (url) {
 
     var self = this;
 
+    if (Cache.get(url)) {
+        self.defer.resetIndex();
+        self.defer.pop(self.start);
+        return;
+    }
+
     console.log('[Get img]', url);
+
+    // 这里设置cache有助于提高性能
+    Cache.set(url);
+
     request.get(url)
            .on('end', function () {
                self.defer.resetIndex();
