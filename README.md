@@ -24,6 +24,8 @@
 
 `onlyHost`: whether the spider only crawl the same domain website, default `true`.
 
+`downloadImage`: whether download the images, when crawling. default `false`.
+
 #### OUTPUT 
 
 1. The images src will be written to `$(pwd)/log/images_log`. you can download them use `download.sh`, or set `downloadImage: true`.

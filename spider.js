@@ -3,6 +3,7 @@ var Defer = require('./lib/defer');
 var Url = require('./lib/url');
 var Cache = require('./lib/cache');
 var Log = require('./lib/log');
+var ImageSpider = require('./imageSpider');
 
 var chromeUA = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36';
 
@@ -13,7 +14,7 @@ function Spider(url, options) {
     options = options || {};
     this.url = url;
     this.userAgent = options.userAgent || chromeUA;
-    this.maxSockets = options.maxSockets || 1;
+    this.maxSockets = options.maxSockets || 2;
     this.level = options.level || 4;
     // 只抓取和初始化链接同域的地址
     this.onlyHost = true;
@@ -21,6 +22,10 @@ function Spider(url, options) {
         MAX_CONNECTIONS: this.maxSockets,
         spider: this
     });
+
+    if (options.downloadImage) {
+        this.imageSpider = new ImageSpider();
+    }
 }
 
 Spider.prototype.crawl = function (urls) {
@@ -98,8 +103,15 @@ Spider.prototype._getHref = function (data, pUrl) {
 
     var imgs = data.match(reImg) || [];
     imgs = this._getImgUrls(imgs, pUrl);
-    //console.log(imgs);
-    Log.append(imgs, 'images_log');
+
+    var logFile = pUrl.replace(/^https?:\/\//, '');
+    var endSep = logFile.indexOf('/');
+    endSep = endSep !== -1 ? endSep : logFile.length;
+    Log.append(imgs, logFile.substring(0, endSep));
+
+    if (this.imageSpider) {
+        this.imageSpider.add && this.imageSpider.add(imgs);
+    }
 
     // 如果设置了抓取同域，则没必要再执行该项
     // hrefs = Url.getMoreSimilaryUrls(hrefs);
