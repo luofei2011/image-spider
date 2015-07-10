@@ -1,18 +1,30 @@
+A spider for crawling images on the website.
+
 #### INSTALL 
 
     # install nodejs packages
     npm install
 
+    # clone git repository
     git clone https://github.com/luofei2011/image-spider.git
     cd image-spider
+
+    # add test.js
     touch test.js
     vim test.js
 
-    # insert
+    # insert 
     var Spider = require('./spider');
-
-    var spider = new Spider('http://poised-flw.com');
+    var spider = new Spider('http://poised-flw.com', {
+        level: 3,
+        maxSockets: 4,
+        downloadImage: true
+    });
     spider.start();
+
+    # save & quit
+    # then. excute this file
+    node test.js
 
 #### OPTIONS
 
