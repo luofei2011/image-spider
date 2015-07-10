@@ -2,12 +2,12 @@ A spider for crawling images on the website.
 
 #### INSTALL 
 
-    # install nodejs packages
-    npm install
-
     # clone git repository
     git clone https://github.com/luofei2011/image-spider.git
     cd image-spider
+
+    # install nodejs packages
+    npm install
 
     # add test.js
     touch test.js
