@@ -14,6 +14,7 @@ function Spider(url, options) {
     this.url = url;
     this.userAgent = options.userAgent || chromeUA;
     this.maxSockets = options.maxSockets || 1;
+    this.level = options.level || 4;
     // 只抓取和初始化链接同域的地址
     this.onlyHost = true;
     this.defer = new Defer({
@@ -26,7 +27,7 @@ Spider.prototype.crawl = function (urls) {
     var self = this;
 
     urls.forEach(function (urlObj) {
-        if (!Cache.get(urlObj.url)) {
+        if (!Cache.get(urlObj.url) && urlObj.level <= self.level) {
             self.defer.push(urlObj);
         }
     });

@@ -20,6 +20,8 @@
 
 `maxSockets`: the concurrent number of spider.
 
+`level`: the crawling depth of spider.
+
 `onlyHost`: whether the spider only crawl the same domain website, default `true`.
 
 #### OUTPUT 
