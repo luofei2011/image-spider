@@ -117,6 +117,4 @@ Spider.prototype._getHref = function (data, pUrl) {
     return hrefs;
 };
 
-// start
-var spider = new Spider('http://poised-flw.com');
-spider.start();
+module.exports = Spider;

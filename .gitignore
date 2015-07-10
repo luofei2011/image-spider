@@ -1,1 +1,6 @@
 *.swp
+images
+log
+node_modules
+pic
+index.js
