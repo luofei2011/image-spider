@@ -51,6 +51,9 @@ Spider.prototype.start = function (urlObj) {
     level++;
 
     console.log('[Get url]', url, '[in level]', level);
+
+    Cache.set(url);
+
     Util.get(url, function (data) {
         self.defer.resetIndex();
 
@@ -63,7 +66,6 @@ Spider.prototype.start = function (urlObj) {
             hrefs = self._setLevel(hrefs, level);
         }
 
-        //Cache.set(url);
         hrefs && self.crawl(hrefs);
         //console.log('[start crawl]', urlObj);
     });
