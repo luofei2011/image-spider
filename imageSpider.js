@@ -11,7 +11,7 @@ function ImageSpider(options) {
     this.maxSockets = options.maxSockets || 2;
     this.defer = new Defer({
         MAX_CONNECTIONS: this.maxSockets,
-        spider: this
+        callbackContext: this
     });
 }
 

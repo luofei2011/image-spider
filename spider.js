@@ -20,7 +20,7 @@ function Spider(url, options) {
     this.onlyHost = true;
     this.defer = new Defer({
         MAX_CONNECTIONS: this.maxSockets,
-        spider: this
+        callbackContext: this
     });
 
     if (options.downloadImage) {
