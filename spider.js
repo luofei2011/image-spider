@@ -16,7 +16,7 @@ function Spider(url, options) {
     this.userAgent = options.userAgent || chromeUA;
     this.maxSockets = options.maxSockets || 2;
     this.level = options.level || 4;
-	// only crawl the same domain address.
+    // only crawl the same domain address.
     this.onlyHost = true;
     this.defer = new Defer({
         MAX_CONNECTIONS: this.maxSockets,

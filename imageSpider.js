@@ -17,7 +17,7 @@ function ImageSpider(options) {
 
 ImageSpider.prototype.add = function (urls) {
     this.defer.push(urls);
-	// execute pop when add.
+    // execute pop when add.
     this.defer.pop(this.start);
 };
 
@@ -42,16 +42,16 @@ ImageSpider.prototype.start = function (url) {
 
     console.log('[Get img]', url);
 
-	// cache the url.
-	// important!!! before request.get
+    // cache the url.
+    // important!!! before request.get
     Cache.set(url);
 
     request.get(url)
-           .on('end', function () {
-               self.defer.resetIndex();
-               self.defer.pop(self.start);
-           })
-           .pipe(fs.createWriteStream(dirs + filename));
+    .on('end', function () {
+        self.defer.resetIndex();
+        self.defer.pop(self.start);
+    })
+    .pipe(fs.createWriteStream(dirs + filename));
 };
 
 module.exports = ImageSpider;
