@@ -17,7 +17,7 @@ function ImageSpider(options) {
 
 ImageSpider.prototype.add = function (urls) {
     this.defer.push(urls);
-    // 每次添加后都启动一下
+	// execute pop when add.
     this.defer.pop(this.start);
 };
 
@@ -42,7 +42,8 @@ ImageSpider.prototype.start = function (url) {
 
     console.log('[Get img]', url);
 
-    // 这里设置cache有助于提高性能
+	// cache the url.
+	// important!!! before request.get
     Cache.set(url);
 
     request.get(url)

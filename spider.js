@@ -16,7 +16,7 @@ function Spider(url, options) {
     this.userAgent = options.userAgent || chromeUA;
     this.maxSockets = options.maxSockets || 2;
     this.level = options.level || 4;
-    // 只抓取和初始化链接同域的地址
+	// only crawl the same domain address.
     this.onlyHost = true;
     this.defer = new Defer({
         MAX_CONNECTIONS: this.maxSockets,
@@ -115,8 +115,6 @@ Spider.prototype._getHref = function (data, pUrl) {
         this.imageSpider.add && this.imageSpider.add(imgs);
     }
 
-    // 如果设置了抓取同域，则没必要再执行该项
-    // hrefs = Url.getMoreSimilaryUrls(hrefs);
     if (self.onlyHost) {
         hrefs = hrefs && hrefs.filter(function (href) {
             //return href.indexOf(pUrl) !== -1 && href.indexOf('.xml') === -1 && href.indexOf('.css') === -1 && href.indexOf('.js') === -1;
